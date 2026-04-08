@@ -35,7 +35,7 @@ pip install numpy pandas scikit-learn matplotlib openpyxl imbalanced-learn tense
 
 Download PreRisk-CoV2 scripts
 ```bash
-git clone https://github.com/NTOUBiomedicalAILAB/PreRisk-CoV2.git
+git clone https://github.com/NTOUBiomedicalAILABbackup/PreRisk-CoV2.git
 cd PreRisk-CoV2/
 ```
 
