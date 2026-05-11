@@ -2,9 +2,9 @@
 
 ## Overview
 
-PreRisk-CoV2 is a machine learning framework for pre-exposure risk assessment of SARS-CoV-2 susceptibility using Serum protein biomarkers. The main function is to predict infection risk **before exposure** based on a 7-protein panel identified through K-Nearest Neighbors (KNN) combined with Genetic Algorithm (GA) feature selection. The input consists of protein expression data (CSV format), and the output provides risk prediction results with comprehensive performance metrics.
+PreRisk-CoV2 is a machine learning framework for pre-exposure risk assessment of SARS-CoV-2 susceptibility using Serum protein biomarkers. The main function is to predict infection risk **before exposure** based on a 7-protein panel identified through K-Nearest Neighbors (KNN) combined with Genetic Algorithm (GA) feature selection. 
 
-📄 **Paper**: Pre-exposure Serum Proteins Predict 3-Month SARS-CoV-2 Susceptibility: A 7-Protein Candidate Signature
+
 
 If you have any trouble installing or using PreRisk-CoV2, you can post an issue or directly email us. We welcome any suggestions.
 
@@ -29,13 +29,13 @@ conda activate PreRisk_CoV2
 
 Install core packages
 ```bash
-pip install numpy pandas scikit-learn matplotlib openpyxl imbalanced-learn tenseal
+pip install numpy pandas scikit-learn matplotlib openpyxl imbalanced-learn
 ```
 
 
 Download PreRisk-CoV2 scripts
 ```bash
-git clone https://github.com/NTOUBiomedicalAILABbackup/PreRisk-CoV2.git
+git clone https://github.com/NTOUBiomedicalAILAB/PreRisk-CoV2.git
 cd PreRisk-CoV2/
 ```
 
@@ -43,37 +43,18 @@ cd PreRisk-CoV2/
 
 ## Quick test
 ## Clinical datasets should follow ethical and privacy regulations
-Step 1: Encrypts your CSV to a secure .bin format
+## Quick test
+> Clinical datasets should follow ethical and privacy regulations
+
+### Internal Validation (LOOCV)
 ```bash
-python encrypt.py --input Validation.csv --output Validation_encrypted.bin
+python prerisk_cov2.py --mode internal --input Discovery.csv --n-iterations 100 --use-smote --plot-curves --output-dir ./results
 ```
 
-
-Step 2: Set up encrypted-style KNN computation 
-
+### External Validation
 ```bash
-python prerisk_cov2.py --mode run --input Validation_encrypted.bin
+python prerisk_cov2.py --mode external --train-input Discovery.csv --test-input Validation.csv --n-iterations 100 --use-smote --plot-curves --output-dir ./results
 ```
-
-Step 3: Decrypt the encrypted results upon request to generate the final report
-
-- Step 3A: Upload your encrypted_result.bin to Google Drive
-- Step 3B: Set sharing permissions  Right-click → Share → "Anyone with the link" → Viewer
-- Step 3C: Copy the shareable link
-- Step 3D: Send this exact email:
- ```txt
-To: ntoubiomedicalai2026@gmail.com
-Subject: [PreRisk-CoV2] Analysis Request
-Body: [Paste your Google Drive link here]
-```
-
-
-
-Report Contains  
-
-- Sample ID  
-- Infection Risk Prediction (High/Low)  
-- Risk Score (0.0-1.0)  
 
 
 #### 2. Subsequent Usage
@@ -87,21 +68,9 @@ cd PreRisk-CoV2/
 
 ---
 
-
-## Expected Response Time
-
-**⏱️ Server will reply within 2 minutes** with:
-- ✅ `Client_Report_Decrypted.csv` (analysis results)
-- ✅ Privacy confirmation (your data deleted)
-
-
-
----
-
-
 ## 📊 Input Data Format
-The input consists of protein expression data (CSV format), and the output provides infection risk prediction.
-To ensure compatibility with the FHE encryption and prediction pipeline, please format your input CSV as follows:
+The input consists of protein expression data (CSV format),
+To ensure compatibility with the prediction pipeline, please format your input CSV as follows:
 
 ### CSV File Structure
 
@@ -111,7 +80,7 @@ To ensure compatibility with the FHE encryption and prediction pipeline, please 
 - **Column 2 ~ N**: Protein expression levels (e.g., Olink NPX values).
 
 ### 🧬 The 7-Protein Panel (Default)
-By default, the system automatically extracts and encrypts the following 7 biomarkers using  name matching:
+By default, the system automatically extracts the following 7 biomarkers using case-insensitive name matching:
 > **MCP-3, LIF-R, TRANCE, FGF-23, NT-3, CXCL1, CXCL6**
 
 <br>
